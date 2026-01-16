@@ -205,69 +205,87 @@ function App() {
                                 ))}
                             </SortableContext>
                         </DndContext>
-
-                        {/* Compile Button */}
-                        <div className="sticky bottom-4">
-                            {error && (
-                                <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-xl text-red-600 text-sm">
-                                    {error}
-                                </div>
-                            )}
-                            <button
-                                onClick={handleCompile}
-                                disabled={!isValid() || isCompiling}
-                                className={`w-full py-4 px-6 rounded-xl shadow-lg font-semibold transition-all transform ${isValid() && !isCompiling
-                                    ? 'bg-violet-600 hover:bg-violet-700 text-white hover:shadow-xl hover:scale-[1.02] active:scale-[0.98]'
-                                    : 'bg-gray-200 text-gray-400 cursor-not-allowed'
-                                    }`}
-                            >
-                                {isCompiling ? (
-                                    <span className="flex items-center justify-center gap-2">
-                                        <svg className="animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24">
-                                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                                        </svg>
-                                        Compiling...
-                                    </span>
-                                ) : (
-                                    '✨ Compile Resume'
-                                )}
-                            </button>
-                        </div>
                     </div>
 
                     {/* Right Panel - Preview (45%) */}
-                    <div className="w-[45%] bg-white rounded-2xl border border-gray-200 shadow-sm flex flex-col">
-                        {pdfUrl ? (
-                            <>
-                                <div className="p-4 border-b border-gray-200 flex justify-between items-center">
-                                    <span className="text-sm text-gray-500">Preview</span>
-                                    <button
-                                        onClick={handleDownload}
-                                        className="px-4 py-2 bg-violet-600 hover:bg-violet-700 text-white text-sm font-medium rounded-lg transition-colors"
-                                    >
-                                        ⬇ Download PDF
-                                    </button>
+                    <div className="w-[45%] bg-gray-800 rounded-2xl shadow-lg flex flex-col overflow-hidden">
+                        {/* Preview Toolbar */}
+                        <div className="bg-gray-700 px-4 py-3 flex items-center justify-between">
+                            <div className="flex items-center gap-2">
+                                <button
+                                    onClick={handleCompile}
+                                    disabled={!isValid() || isCompiling}
+                                    className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-sm transition-all ${isValid() && !isCompiling
+                                        ? 'bg-green-500 hover:bg-green-600 text-white'
+                                        : 'bg-gray-600 text-gray-400 cursor-not-allowed'
+                                        }`}
+                                >
+                                    {isCompiling ? (
+                                        <>
+                                            <svg className="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
+                                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                                            </svg>
+                                            Compiling...
+                                        </>
+                                    ) : (
+                                        <>
+                                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                                            </svg>
+                                            {pdfUrl ? 'Recompile' : 'Compile'}
+                                        </>
+                                    )}
+                                </button>
+                                {/* Document icon */}
+                                <div className="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-white transition-colors cursor-pointer">
+                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                    </svg>
                                 </div>
-                                <div className="flex-1 p-4">
-                                    <iframe src={pdfUrl} className="w-full h-full rounded-lg bg-white border border-gray-100" title="Resume Preview" />
-                                </div>
-                            </>
-                        ) : (
-                            <div className="flex-1 flex items-center justify-center">
-                                <div className="text-center p-8">
-                                    <div className="w-24 h-24 mx-auto mb-4 bg-violet-50 rounded-2xl flex items-center justify-center">
-                                        <svg className="w-12 h-12 text-violet-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                                        </svg>
-                                    </div>
-                                    <h3 className="text-lg font-semibold text-gray-800 mb-2" style={{ fontFamily: 'Poppins, sans-serif' }}>PDF Preview</h3>
-                                    <p className="text-sm text-gray-500">
-                                        Fill in your details and click "Compile Resume" to see your ATS-friendly resume here
-                                    </p>
-                                </div>
+                                {/* Download icon */}
+                                <button
+                                    onClick={handleDownload}
+                                    disabled={!pdfUrl}
+                                    className={`w-8 h-8 flex items-center justify-center transition-colors ${pdfUrl ? 'text-gray-400 hover:text-white cursor-pointer' : 'text-gray-600 cursor-not-allowed'}`}
+                                >
+                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                                    </svg>
+                                </button>
+                            </div>
+                            {pdfUrl && (
+                                <span className="text-xs text-gray-400">Ready to download</span>
+                            )}
+                        </div>
+
+                        {/* Error Message */}
+                        {error && (
+                            <div className="mx-4 mt-3 p-3 bg-red-500/20 border border-red-500/30 rounded-lg text-red-300 text-sm">
+                                {error}
                             </div>
                         )}
+
+                        {/* PDF Preview Area */}
+                        <div className="flex-1 p-4">
+                            {pdfUrl ? (
+                                <iframe src={pdfUrl} className="w-full h-full rounded-lg bg-gray-100" title="Resume Preview" />
+                            ) : (
+                                <div className="w-full h-full flex items-center justify-center rounded-lg bg-gray-700/50">
+                                    <div className="text-center p-8">
+                                        <div className="w-20 h-20 mx-auto mb-4 bg-gray-600 rounded-xl flex items-center justify-center">
+                                            <svg className="w-10 h-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                            </svg>
+                                        </div>
+                                        <h3 className="text-lg font-semibold text-gray-300 mb-2" style={{ fontFamily: 'Poppins, sans-serif' }}>PDF Preview</h3>
+                                        <p className="text-sm text-gray-500">
+                                            Click "Compile" to generate your resume
+                                        </p>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
                     </div>
                 </div>
             </main>
