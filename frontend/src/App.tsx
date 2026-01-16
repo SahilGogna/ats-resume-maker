@@ -245,12 +245,6 @@ function App() {
                                         </div>
                                     )}
                                 </div>
-                                {/* Document icon */}
-                                <div className="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-violet-600 transition-colors cursor-pointer">
-                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                                    </svg>
-                                </div>
                                 {/* Download icon */}
                                 <button
                                     onClick={handleDownload}
@@ -275,14 +269,18 @@ function App() {
                         )}
 
                         {/* PDF Preview Area */}
-                        <div className="flex-1 p-4 bg-gray-50 overflow-auto">
+                        <div className="flex-1 p-4 bg-gray-50 overflow-y-auto">
                             {pdfUrl ? (
-                                <iframe
-                                    src={`${pdfUrl}#toolbar=0&navpanes=0&scrollbar=0&view=FitH`}
-                                    className="w-full rounded-lg shadow-sm border border-gray-200"
-                                    style={{ height: 'calc(100% + 100px)', minHeight: '800px' }}
-                                    title="Resume Preview"
-                                />
+                                <div
+                                    className="w-full bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden"
+                                    style={{ aspectRatio: '8.5 / 11' }}
+                                >
+                                    <iframe
+                                        src={`${pdfUrl}#toolbar=0&navpanes=0&scrollbar=0&view=FitH,top`}
+                                        className="w-full h-full"
+                                        title="Resume Preview"
+                                    />
+                                </div>
                             ) : (
                                 <div className="w-full h-full flex items-center justify-center rounded-lg bg-white border border-gray-200">
                                     <div className="text-center p-8">
