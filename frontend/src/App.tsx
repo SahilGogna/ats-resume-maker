@@ -275,11 +275,12 @@ function App() {
                         )}
 
                         {/* PDF Preview Area */}
-                        <div className="flex-1 p-4 bg-gray-100">
+                        <div className="flex-1 p-4 bg-gray-50 overflow-auto">
                             {pdfUrl ? (
                                 <iframe
-                                    src={`${pdfUrl}#toolbar=0&navpanes=0&scrollbar=1`}
-                                    className="w-full h-full rounded-lg bg-white shadow-sm"
+                                    src={`${pdfUrl}#toolbar=0&navpanes=0&scrollbar=0&view=FitH`}
+                                    className="w-full rounded-lg shadow-sm border border-gray-200"
+                                    style={{ height: 'calc(100% + 100px)', minHeight: '800px' }}
                                     title="Resume Preview"
                                 />
                             ) : (
