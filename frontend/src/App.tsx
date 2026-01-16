@@ -176,7 +176,6 @@ function App() {
                             />
                             <span className={`text-sm font-medium ${isTestMode ? 'text-violet-600' : 'text-gray-400'}`}>Test</span>
                         </div>
-                        <span className="text-sm text-gray-500">Powered by LaTeX</span>
                     </div>
                 </div>
             </header>
