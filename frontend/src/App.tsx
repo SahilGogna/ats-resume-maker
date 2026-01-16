@@ -161,7 +161,7 @@ function App() {
         <div className="min-h-screen bg-gradient-to-b from-purple-100 via-pink-50 to-white">
             {/* Header */}
             <header className="bg-white/80 backdrop-blur-sm border-b border-gray-200 sticky top-0 z-50">
-                <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+                <div className="max-w-[95%] mx-auto px-6 py-4 flex items-center justify-between">
                     <h1 className="text-2xl font-bold text-gray-900" style={{ fontFamily: 'Poppins, sans-serif' }}>
                         ATS Resume Builder
                     </h1>
@@ -181,10 +181,10 @@ function App() {
             </header>
 
             {/* Main Content - Split Layout */}
-            <main className="max-w-7xl mx-auto px-4 py-6">
-                <div className="flex gap-6 min-h-[calc(100vh-120px)]">
-                    {/* Left Panel - Form (60%) */}
-                    <div className="w-3/5 overflow-y-auto pr-4 space-y-6">
+            <main className="max-w-[95%] mx-auto px-6 py-6">
+                <div className="flex gap-8 min-h-[calc(100vh-120px)]">
+                    {/* Left Panel - Form (55%) */}
+                    <div className="w-[55%] overflow-y-auto pr-4 space-y-6">
                         {/* Basic Details - Fixed, not draggable */}
                         <BasicDetailsSection data={basicDetails} onChange={updateBasicDetails} />
 
@@ -236,8 +236,8 @@ function App() {
                         </div>
                     </div>
 
-                    {/* Right Panel - Preview (40%) */}
-                    <div className="w-2/5 bg-white rounded-2xl border border-gray-200 shadow-sm flex flex-col">
+                    {/* Right Panel - Preview (45%) */}
+                    <div className="w-[45%] bg-white rounded-2xl border border-gray-200 shadow-sm flex flex-col">
                         {pdfUrl ? (
                             <>
                                 <div className="p-4 border-b border-gray-200 flex justify-between items-center">
