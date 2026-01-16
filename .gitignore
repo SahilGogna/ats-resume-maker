@@ -1,0 +1,21 @@
+# Dependencies
+node_modules
+vendor
+
+# Build output
+dist
+tmp
+output
+bin
+backend/output/*.pdf
+
+# Environment variables
+.env
+.env.local
+
+# IDEs
+.vscode
+.idea
+
+# OS
+.DS_Store
