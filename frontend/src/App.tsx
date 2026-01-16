@@ -166,15 +166,14 @@ function App() {
                         ATS Resume Builder
                     </h1>
                     <div className="flex items-center gap-6">
-                        {/* Test Mode Toggle */}
+                        {/* Sample Data Toggle */}
                         <div className="flex items-center gap-3">
-                            <span className={`text-sm font-medium ${!isTestMode ? 'text-gray-900' : 'text-gray-400'}`}>Normal</span>
                             <button
                                 onClick={() => setIsTestMode(!isTestMode)}
                                 className={`toggle-switch ${isTestMode ? 'active' : ''}`}
-                                aria-label="Toggle test mode"
+                                aria-label="Toggle sample data"
                             />
-                            <span className={`text-sm font-medium ${isTestMode ? 'text-violet-600' : 'text-gray-400'}`}>Test</span>
+                            <span className={`text-sm font-medium ${isTestMode ? 'text-violet-600' : 'text-gray-500'}`}>Fill Sample Data</span>
                         </div>
                     </div>
                 </div>
@@ -208,37 +207,46 @@ function App() {
                     </div>
 
                     {/* Right Panel - Preview (45%) */}
-                    <div className="w-[45%] bg-gray-800 rounded-2xl shadow-lg flex flex-col overflow-hidden">
+                    <div className="w-[45%] bg-white rounded-2xl border border-gray-200 shadow-sm flex flex-col overflow-hidden">
                         {/* Preview Toolbar */}
-                        <div className="bg-gray-700 px-4 py-3 flex items-center justify-between">
+                        <div className="bg-gray-50 border-b border-gray-200 px-4 py-3 flex items-center justify-between">
                             <div className="flex items-center gap-2">
-                                <button
-                                    onClick={handleCompile}
-                                    disabled={!isValid() || isCompiling}
-                                    className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-sm transition-all ${isValid() && !isCompiling
-                                        ? 'bg-green-500 hover:bg-green-600 text-white'
-                                        : 'bg-gray-600 text-gray-400 cursor-not-allowed'
-                                        }`}
-                                >
-                                    {isCompiling ? (
-                                        <>
-                                            <svg className="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
-                                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                                            </svg>
-                                            Compiling...
-                                        </>
-                                    ) : (
-                                        <>
-                                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                                            </svg>
-                                            {pdfUrl ? 'Recompile' : 'Compile'}
-                                        </>
+                                <div className="relative group">
+                                    <button
+                                        onClick={handleCompile}
+                                        disabled={!isValid() || isCompiling}
+                                        className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-sm transition-all ${isValid() && !isCompiling
+                                            ? 'bg-violet-600 hover:bg-violet-700 text-white'
+                                            : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                                            }`}
+                                    >
+                                        {isCompiling ? (
+                                            <>
+                                                <svg className="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
+                                                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                                                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                                                </svg>
+                                                Compiling...
+                                            </>
+                                        ) : (
+                                            <>
+                                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                                                </svg>
+                                                {pdfUrl ? 'Recompile' : 'Compile'}
+                                            </>
+                                        )}
+                                    </button>
+                                    {/* Tooltip for disabled state */}
+                                    {!isValid() && !isCompiling && (
+                                        <div className="absolute left-0 top-full mt-2 px-3 py-2 bg-gray-800 text-white text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10">
+                                            Fill required fields first
+                                            <div className="absolute -top-1 left-4 w-2 h-2 bg-gray-800 rotate-45"></div>
+                                        </div>
                                     )}
-                                </button>
+                                </div>
                                 {/* Document icon */}
-                                <div className="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-white transition-colors cursor-pointer">
+                                <div className="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-violet-600 transition-colors cursor-pointer">
                                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                                     </svg>
@@ -247,7 +255,7 @@ function App() {
                                 <button
                                     onClick={handleDownload}
                                     disabled={!pdfUrl}
-                                    className={`w-8 h-8 flex items-center justify-center transition-colors ${pdfUrl ? 'text-gray-400 hover:text-white cursor-pointer' : 'text-gray-600 cursor-not-allowed'}`}
+                                    className={`w-8 h-8 flex items-center justify-center transition-colors ${pdfUrl ? 'text-gray-400 hover:text-violet-600 cursor-pointer' : 'text-gray-300 cursor-not-allowed'}`}
                                 >
                                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
@@ -255,32 +263,36 @@ function App() {
                                 </button>
                             </div>
                             {pdfUrl && (
-                                <span className="text-xs text-gray-400">Ready to download</span>
+                                <span className="text-xs text-gray-500">Ready to download</span>
                             )}
                         </div>
 
                         {/* Error Message */}
                         {error && (
-                            <div className="mx-4 mt-3 p-3 bg-red-500/20 border border-red-500/30 rounded-lg text-red-300 text-sm">
+                            <div className="mx-4 mt-3 p-3 bg-red-50 border border-red-200 rounded-lg text-red-600 text-sm">
                                 {error}
                             </div>
                         )}
 
                         {/* PDF Preview Area */}
-                        <div className="flex-1 p-4">
+                        <div className="flex-1 p-4 bg-gray-100">
                             {pdfUrl ? (
-                                <iframe src={pdfUrl} className="w-full h-full rounded-lg bg-gray-100" title="Resume Preview" />
+                                <iframe
+                                    src={`${pdfUrl}#toolbar=0&navpanes=0&scrollbar=1`}
+                                    className="w-full h-full rounded-lg bg-white shadow-sm"
+                                    title="Resume Preview"
+                                />
                             ) : (
-                                <div className="w-full h-full flex items-center justify-center rounded-lg bg-gray-700/50">
+                                <div className="w-full h-full flex items-center justify-center rounded-lg bg-white border border-gray-200">
                                     <div className="text-center p-8">
-                                        <div className="w-20 h-20 mx-auto mb-4 bg-gray-600 rounded-xl flex items-center justify-center">
-                                            <svg className="w-10 h-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <div className="w-20 h-20 mx-auto mb-4 bg-violet-50 rounded-xl flex items-center justify-center">
+                                            <svg className="w-10 h-10 text-violet-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                                             </svg>
                                         </div>
-                                        <h3 className="text-lg font-semibold text-gray-300 mb-2" style={{ fontFamily: 'Poppins, sans-serif' }}>PDF Preview</h3>
+                                        <h3 className="text-lg font-semibold text-gray-800 mb-2" style={{ fontFamily: 'Poppins, sans-serif' }}>PDF Preview</h3>
                                         <p className="text-sm text-gray-500">
-                                            Click "Compile" to generate your resume
+                                            Fill in your details and click "Compile" to preview your resume
                                         </p>
                                     </div>
                                 </div>
