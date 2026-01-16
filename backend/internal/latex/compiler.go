@@ -325,10 +325,11 @@ func (c *Compiler) buildProjects(content interface{}) string {
 			if date != "" {
 				projectHeader += fmt.Sprintf(" \\hfill %s", EscapeString(date))
 			}
-			sb.WriteString(projectHeader + "\\\\\n")
+			sb.WriteString(projectHeader + "\n")
 
 			// Build bullet points like experience
 			if len(desc) > 0 {
+				sb.WriteString("\\vspace{-0.5em}\n")
 				sb.WriteString(" \\begin{itemize}\n")
 				sb.WriteString("    \\itemsep -3pt {}\n")
 				for _, d := range desc {
