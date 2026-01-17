@@ -3,7 +3,6 @@ package main
 import (
 	"log"
 	"net/http"
-	"strings"
 	"time"
 
 	"github.com/gin-contrib/cors"
@@ -19,19 +18,12 @@ func main() {
 		AllowOrigins: []string{
 			"http://localhost:3000",
 			"http://localhost:5173",
-			"https://*.github.io", // GitHub Pages
+			"https://sahilgogna.github.io",
 		},
-		AllowOriginFunc: func(origin string) bool {
-			// Allow any GitHub Pages origin or localhost
-			return origin == "http://localhost:3000" ||
-				origin == "http://localhost:5173" ||
-				strings.HasSuffix(origin, ".github.io")
-		},
-		AllowMethods:     []string{"GET", "POST", "OPTIONS"},
-		AllowHeaders:     []string{"Origin", "Content-Type", "Accept"},
-		ExposeHeaders:    []string{"Content-Length"},
-		AllowCredentials: true,
-		MaxAge:           12 * time.Hour,
+		AllowMethods:  []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowHeaders:  []string{"Origin", "Content-Type", "Accept", "Authorization"},
+		ExposeHeaders: []string{"Content-Length", "Content-Type"},
+		MaxAge:        12 * time.Hour,
 	}))
 
 	// Health check endpoint
