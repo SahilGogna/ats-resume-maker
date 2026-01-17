@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/gin-contrib/cors"
@@ -40,8 +41,14 @@ func main() {
 	// PDF download endpoint
 	r.GET("/api/download/:filename", handlers.DownloadPDF)
 
-	log.Println("🚀 Starting ATS Resume Builder API on :8080")
-	if err := r.Run(":8080"); err != nil {
+	// Get port from environment variable (Render sets this)
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+
+	log.Printf("🚀 Starting ATS Resume Builder API on :%s", port)
+	if err := r.Run(":" + port); err != nil {
 		log.Fatalf("Failed to start server: %v", err)
 	}
 }
