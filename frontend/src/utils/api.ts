@@ -1,6 +1,7 @@
 import { ResumeData, ApiResponse } from '../types/resume';
 
-const API_BASE_URL = '/api';
+// Use environment variable for production, fallback to local proxy for development
+const API_BASE_URL = import.meta.env.VITE_API_URL || '/api';
 
 export async function compileResume(data: ResumeData): Promise<ApiResponse> {
     // Transform data to match API format (remove 'id' and 'visible' fields)
